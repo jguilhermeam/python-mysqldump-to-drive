@@ -57,6 +57,7 @@ def upload_basic(service, filename, mime, folder_id):
 
 
 def main():
+    print('---')
     dump_file = get_dump()
 
     creds = service_account.Credentials.from_service_account_file(KEY_FILE)
