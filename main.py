@@ -2,7 +2,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
-import os
+import subprocess
 import time
 
 HOST='127.0.0.1'
@@ -16,7 +16,8 @@ BACKUPS_FOLDER='backups'
 def get_dump():
     print('dumping database...')
     filestamp = time.strftime('%Y-%m-%d-%I-%M')
-    os.popen("mysqldump --column-statistics=0 -h %s -u %s -p%s %s > %s.sql" % (HOST,DB_USER,DB_PASS,DB_NAME,DB_NAME+"_"+filestamp))
+    p = subprocess.Popen("mysqldump --column-statistics=0 -h %s -u %s -p%s %s > %s.sql" % (HOST,DB_USER,DB_PASS,DB_NAME,DB_NAME+"_"+filestamp),shell=True)
+    p.wait()
     dump_filename = DB_NAME+"_"+filestamp+".sql"
     print("Database dumped to "+dump_filename)
     return dump_filename
