@@ -16,9 +16,9 @@ BACKUPS_FOLDER='backups'
 def get_dump():
     print('dumping database...')
     filestamp = time.strftime('%Y-%m-%d-%I-%M')
-    p = subprocess.Popen("mysqldump --column-statistics=0 -h %s -u %s -p%s %s > %s.sql" % (HOST,DB_USER,DB_PASS,DB_NAME,DB_NAME+"_"+filestamp),shell=True)
+    p = subprocess.Popen("mysqldump --column-statistics=0 -h %s -u %s -p%s %s | gzip > %s.sql.gz" % (HOST,DB_USER,DB_PASS,DB_NAME,DB_NAME+"_"+filestamp),shell=True)
     p.wait()
-    dump_filename = DB_NAME+"_"+filestamp+".sql"
+    dump_filename = DB_NAME+"_"+filestamp+".sql.gz"
     print("Database dumped to "+dump_filename)
     return dump_filename
 
@@ -27,7 +27,7 @@ def clear_old_backups(service):
 
     results = service.files().list(fields="files(id, name, createdTime)").execute()
     items = results.get('files', [])
-    sqls = [item for item in items if item['name'].endswith('.sql')]
+    sqls = [item for item in items if item['name'].endswith('.sql.gz')]
 
     if len(sqls) > MAX_DUMPS:
         sqls.sort(key = lambda x: x['createdTime'], reverse=True)
@@ -81,7 +81,7 @@ def main():
         if folder_id == None:
             exit('ERROR no backups folder was found')
 
-        upload_basic(service, dump_file, 'application/sql', folder_id)
+        upload_basic(service, dump_file, 'application/gzip', folder_id)
         clear_old_backups(service)
         os.remove(dump_file)
 
