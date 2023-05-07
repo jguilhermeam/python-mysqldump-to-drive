@@ -48,13 +48,13 @@ def upload_basic(service, filename, mime, folder_id):
         file = service.files().create(body=file_metadata, media_body=media,
                                       fields='id').execute()
         print("uploading "+filename)
-        print(F'File ID: {file.get("id")}')
+        print('File ID: '+file.get('id'))
     except HttpError as error:
-        print(F'An error occurred: {error}')
+        print('An error occurred: {error}')
         exit('STOPPING -> upload failed')
         file = None
 
-    return {'name': filename, 'id': file.get('id'), 'createdTime': file.get('createdTime')}
+    return file.get('id')
 
 
 def main():
@@ -87,7 +87,7 @@ def main():
         os.remove(dump_file)
 
     except HttpError as error:
-        print(f'An error occurred: {error}')
+        print('An error occurred: {error}')
 
 
 
