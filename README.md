@@ -3,6 +3,8 @@ Python mysqldump to Google Drive
 
 ### Install requirements
 
+Python3 is needed.
+
 ```
 pip install google-api-python-client
 sudo apt install mysql-client
@@ -21,3 +23,10 @@ to run
 python main.py
 ```
 
+### Sample cron job
+
+in this sample cron job call, the output will be stored in a log txt file
+
+```
+0 3 * * * /usr/bin/python3 /path/to/main.py >> /path/to/log.txt
+```
