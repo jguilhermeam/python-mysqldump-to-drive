@@ -4,6 +4,7 @@ from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
 import subprocess
 import time
+import os
 
 HOST='127.0.0.1'
 DB_USER='username'
@@ -66,10 +67,6 @@ def main():
     try:
         results = service.files().list(fields="files(id, name)").execute()
         items = results.get('files', [])
-
-        if not items:
-            print('No files found.')
-            return
 
         folder_id = None
         print('Files:')
