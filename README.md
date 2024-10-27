@@ -6,7 +6,7 @@ Python mysqldump to Google Drive
 Python3 is needed.
 
 ```
-pip install google-api-python-client
+pip3 install google-api-python-client
 sudo apt install mysql-client
 ```
 
@@ -27,7 +27,7 @@ After that it will clear old backups based on the MAX_DUMPS variable value defin
 to run
 
 ```
-python main.py
+python3 main.py
 ```
 
 ### Sample cron job
