@@ -10,6 +10,13 @@ pip install google-api-python-client
 sudo apt install mysql-client
 ```
 
+### Google Cloud console requirements
+
+Enable Google Drive API
+Create a Service Account with Actions Admin role
+Create a Key for the Service Account in JSON format
+Share the folder on Google Drive with the Service Account Principal Email
+
 ### To execute
 
 Set database credentials on main.py and configure a Google Service account and export its json key file. Define the json file path in KEY_FILE variable.
